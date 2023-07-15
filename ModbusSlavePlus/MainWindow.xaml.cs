@@ -43,14 +43,14 @@ namespace ModbusSlavePlus
             var result = connect.ShowDialog();
             if (result == true) 
             {
-                ConnectionModel data = (ConnectionModel)connect.DataContext;
-                context.Sp.PortName = (string)data.SelectedPort.Value;
-                context.Sp.BaudRate = (int)data.SelectedBaudRate.Value;
-                context.Sp.DataBits = (int)data.SelectedDataBit.Value;
-                context.Sp.Parity = (Parity)data.SelectedParity.Value;
-                context.Sp.StopBits = (StopBits)data.SelectedStopBits.Value;
                 if (!context.Sp.IsOpen)
                 {
+                    ConnectionModel data = (ConnectionModel)connect.DataContext;
+                    context.Sp.PortName = (string)data.SelectedPort.Value;
+                    context.Sp.BaudRate = (int)data.SelectedBaudRate.Value;
+                    context.Sp.DataBits = (int)data.SelectedDataBit.Value;
+                    context.Sp.Parity = (Parity)data.SelectedParity.Value;
+                    context.Sp.StopBits = (StopBits)data.SelectedStopBits.Value;
                     context.Sp.Open();
                     context.Slave = ModbusSerialSlave.CreateRtu(1, context.Sp);
                     context.Slave.DataStore = DataStoreFactory.CreateDefaultDataStore();
