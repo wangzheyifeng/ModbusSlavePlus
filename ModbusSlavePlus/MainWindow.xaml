@@ -1,0 +1,45 @@
+﻿<Window x:Class="ModbusSlavePlus.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModbusSlavePlus"
+        xmlns:md="clr-namespace:ModbusSlavePlus.Models"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <md:MainModel/>
+    </Window.DataContext>
+    <Window.Resources>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBox Text="{Binding ZeroValue.Value}"></TextBox>
+            <TextBox></TextBox>
+        </StackPanel>
+        <DataGrid Style="{x:Null}" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding Params}">
+            <DataGrid.Columns>
+                <!--<DataGridTemplateColumn Header="地址">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox IsReadOnly="True" Text="{Binding Address}" Width="200"></TextBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>-->
+                <DataGridTextColumn Header="地址" Width="50" IsReadOnly="true" Binding="{Binding Address}"></DataGridTextColumn>
+                <DataGridTextColumn Header="值" Width="100"  Binding="{Binding Value}"></DataGridTextColumn>
+                <!--<DataGridTemplateColumn Header="值">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Value,Mode=TwoWay}" Width="200"></TextBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>-->
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
