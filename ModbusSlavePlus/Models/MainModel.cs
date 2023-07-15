@@ -23,8 +23,8 @@ namespace ModbusSlavePlus.Models
                 _zeroValue = value;
             }
         }
-        public SerialPort sp;
-        ModbusSlave slave;
+        public SerialPort Sp;
+        public ModbusSlave Slave;
         public ObservableCollection<Param> Params { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public void UpdateValue(string name)
@@ -47,23 +47,7 @@ namespace ModbusSlavePlus.Models
             {
                 ps.Add(p);
             }
-            
-            sp = new SerialPort();
-            sp.PortName = "COM2";
-            sp.BaudRate = 9600;
-            sp.Open();
-            slave = ModbusSerialSlave.CreateRtu(1, sp);
-            slave.DataStore = DataStoreFactory.CreateDefaultDataStore();
-            slave.DataStore.DataStoreWrittenTo += DataStore_DataStoreWrittenTo;
-
-            foreach (Param param in ps)
-            {
-                param.Value = slave.DataStore.HoldingRegisters[param.Address + 1].ToString();
-            }
-            Task.Run(() =>
-            {
-                slave.Listen();
-            });
+            Sp = new SerialPort();
             Params = ps;
             Params.CollectionChanged += Ps_CollectionChanged;
         }
@@ -75,14 +59,14 @@ namespace ModbusSlavePlus.Models
 
         public void UpdateHoldingRegisters(Param param)
         {
-            slave.DataStore.HoldingRegisters[param.Address + 1] = ushort.Parse(param.Value);
+            Slave.DataStore.HoldingRegisters[param.Address + 1] = ushort.Parse(param.Value);
         }
 
-        private void DataStore_DataStoreWrittenTo(object sender, DataStoreEventArgs e)
+        public void DataStore_DataStoreWrittenTo(object sender, DataStoreEventArgs e)
         {
             foreach (var param in Params)
             {
-                param.Value = slave.DataStore.HoldingRegisters[param.Address + 1].ToString();
+                param.Value = Slave.DataStore.HoldingRegisters[param.Address + 1].ToString();
             }
             UpdateValue("Params");
         }

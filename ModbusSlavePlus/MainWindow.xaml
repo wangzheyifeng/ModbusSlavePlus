@@ -6,22 +6,57 @@
         xmlns:local="clr-namespace:ModbusSlavePlus"
         xmlns:md="clr-namespace:ModbusSlavePlus.Models"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <md:MainModel/>
     </Window.DataContext>
     <Window.Resources>
     </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <StackPanel>
+        </Grid.ColumnDefinitions>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--<StackPanel>
             <TextBox Text="{Binding ZeroValue.Value}"></TextBox>
             <TextBox></TextBox>
-        </StackPanel>
-        <DataGrid Style="{x:Null}" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding Params}">
+        </StackPanel>-->
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
+                    <MenuItem Header="_New" Padding="1,1,1,1"/>
+                    <MenuItem Header="_Open" Padding="1,1,1,1"/>
+                    <MenuItem Header="_Close" Padding="1,1,1,1"/>
+                </MenuItem>
+                <MenuItem Header="_Edit" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
+                    <MenuItem Header="_Cut" Padding="1,1,1,1"/>
+                    <MenuItem Header="_Copy" Padding="1,1,1,1"/>
+                </MenuItem>
+                <MenuItem Header="_Connection" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
+                    <MenuItem Click="MenuItem_Click" Header="_Connect" Padding="1,1,1,1"/>
+                    <MenuItem Click="MenuItem_Click_1" Header="_Disconnect" Padding="1,1,1,1"/>
+                </MenuItem>
+                <MenuItem Header="_Setup" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
+                    <MenuItem Header="_Read/Write definition..." Padding="1,1,1,1"/>
+                    <MenuItem Header="_Read/Write once" Padding="1,1,1,1"/>
+                </MenuItem>
+                <MenuItem Header="_Functions" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
+                </MenuItem>
+                <MenuItem Header="_Display" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
+                </MenuItem>
+                <MenuItem Header="_View" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
+                </MenuItem>
+                <MenuItem Header="_Window" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
+                </MenuItem>
+                <MenuItem Header="_Help" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <DataGrid Style="{x:Null}" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Params}" CanUserSortColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <!--<DataGridTemplateColumn Header="地址">
                     <DataGridTemplateColumn.CellTemplate>
@@ -31,7 +66,14 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>-->
                 <DataGridTextColumn Header="地址" Width="50" IsReadOnly="true" Binding="{Binding Address}"></DataGridTextColumn>
+                <DataGridTextColumn Header="参数名" Width="50" Binding="{Binding Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="值" Width="100"  Binding="{Binding Value}"></DataGridTextColumn>
+                <DataGridTextColumn Header="单位" Width="100"  Binding="{Binding Unit}"></DataGridTextColumn>
+                <DataGridTextColumn Header="含义" Width="100"  Binding="{Binding ConvertedValue}"></DataGridTextColumn>
+                <DataGridTextColumn Header="类型" Width="100"  Binding="{Binding Type}"></DataGridTextColumn>
+                <DataGridTextColumn Header="字典" Width="100"  Binding="{Binding Dic}"></DataGridTextColumn>
+                <DataGridTextColumn Header="高级" Width="100"></DataGridTextColumn>
+                <DataGridTextColumn Header="备注" Width="*"></DataGridTextColumn>
                 <!--<DataGridTemplateColumn Header="值">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

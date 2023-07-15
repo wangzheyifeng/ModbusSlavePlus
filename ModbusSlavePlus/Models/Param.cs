@@ -10,8 +10,12 @@ namespace ModbusSlavePlus.Models
     public class Param : INotifyPropertyChanged
     {
         public Action<Param> Notify = (Param p) => { };
+        public string Name { get; set; }
         public ushort Address { get; set; }
-        
+        public string Unit { get; set; }
+        public string ConvertedValue { get; set; }
+        public List<ParamDictionary> Dic { get; set; }
+
         private string _value;
         public string Value 
         { 
@@ -23,7 +27,7 @@ namespace ModbusSlavePlus.Models
                 UpdateValue("Value");
             }
         }
-        public TypeCode Type { get; set; }
+        public TypeCode Type { get; set; } = TypeCode.UInt16;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void UpdateValue(string name)
@@ -35,4 +39,12 @@ namespace ModbusSlavePlus.Models
 
         }
     }
+
+    public class ParamDictionary
+    {
+        public string Name { get; set; }
+        public ushort Value { get; set; }
+        public ParamDictionary() { }
+    }
+
 }
