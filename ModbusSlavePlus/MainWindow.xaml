@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:ModbusSlavePlus"
         xmlns:md="clr-namespace:ModbusSlavePlus.Models"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
+        Title="Modbus Slave Plus" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <!--<Window.DataContext>
         <md:MainModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Window.Resources>
     </Window.Resources>
     <Grid>
@@ -37,11 +37,11 @@
                     <MenuItem Header="_Copy" Padding="1,1,1,1"/>
                 </MenuItem>
                 <MenuItem Header="_Connection" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
-                    <MenuItem Click="MenuItem_Click" Header="_Connect" Padding="1,1,1,1"/>
-                    <MenuItem Click="MenuItem_Click_1" Header="_Disconnect" Padding="1,1,1,1"/>
+                    <MenuItem Command="{Binding ConnectCommand}" Header="_Connect" Padding="1,1,1,1"/>
+                    <MenuItem Command="{Binding CloseCommand}" Header="_Disconnect" Padding="1,1,1,1"/>
                 </MenuItem>
                 <MenuItem Header="_Setup" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
-                    <MenuItem Header="_Read/Write definition..." Padding="1,1,1,1"/>
+                    <MenuItem Command="{Binding OpenSetupWindowCommand}" Header="_Read/Write definition..." Padding="1,1,1,1"/>
                     <MenuItem Header="_Read/Write once" Padding="1,1,1,1"/>
                 </MenuItem>
                 <MenuItem Header="_Functions" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
