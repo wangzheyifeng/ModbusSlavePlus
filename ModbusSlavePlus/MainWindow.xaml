@@ -5,12 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ModbusSlavePlus"
         xmlns:md="clr-namespace:ModbusSlavePlus.Models"
+        xmlns:c="clr-namespace:ModbusSlavePlus.Converters"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Modbus Slave Plus" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <!--<Window.DataContext>
         <md:MainModel/>
     </Window.DataContext>-->
     <Window.Resources>
+        <c:TypeEnumConverter x:Key="TypeEnumConverter"/>
     </Window.Resources>
     <Grid>
         <!--<Grid.ColumnDefinitions>
@@ -57,6 +60,13 @@
             </Menu>
         </DockPanel>
         <DataGrid Style="{x:Null}" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Params}" CanUserSortColumns="False" CanUserAddRows="False">
+            <DataGrid.Resources>
+                <ObjectDataProvider x:Key="TypeCodeProvider" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+                    <ObjectDataProvider.MethodParameters>
+                        <x:Type Type="{x:Type sys:TypeCode}" />
+                    </ObjectDataProvider.MethodParameters>
+                </ObjectDataProvider>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <!--<DataGridTemplateColumn Header="地址">
                     <DataGridTemplateColumn.CellTemplate>
@@ -70,7 +80,19 @@
                 <DataGridTextColumn Header="值" Width="100"  Binding="{Binding Value}"></DataGridTextColumn>
                 <DataGridTextColumn Header="单位" Width="100"  Binding="{Binding Unit}"></DataGridTextColumn>
                 <DataGridTextColumn Header="含义" Width="100"  Binding="{Binding ConvertedValue}"></DataGridTextColumn>
-                <DataGridTextColumn Header="类型" Width="100"  Binding="{Binding Type}"></DataGridTextColumn>
+                <!--<DataGridTextColumn Header="类型" Width="100"  Binding="{Binding Type}"></DataGridTextColumn>-->
+                <DataGridComboBoxColumn Header="类型" Width="100" SelectedItemBinding="{Binding Type}">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding Source={StaticResource TypeCodeProvider}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding Source={StaticResource TypeCodeProvider}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
                 <DataGridTextColumn Header="字典" Width="100"  Binding="{Binding Dic}"></DataGridTextColumn>
                 <DataGridTextColumn Header="高级" Width="100"></DataGridTextColumn>
                 <DataGridTextColumn Header="备注" Width="*"></DataGridTextColumn>

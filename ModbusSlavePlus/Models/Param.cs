@@ -36,7 +36,6 @@ namespace ModbusSlavePlus.Models
         }
         public Param()
         {
-
         }
     }
 

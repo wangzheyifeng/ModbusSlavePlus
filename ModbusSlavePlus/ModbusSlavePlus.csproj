@@ -192,6 +192,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Converters\TypeEnumConverter.cs" />
     <Compile Include="Models\ConnectionModel.cs" />
     <Compile Include="Models\SetupModel.cs" />
     <Compile Include="Windows\ConnectWindow.xaml.cs">
