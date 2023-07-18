@@ -195,6 +195,7 @@
     <Compile Include="Converters\TypeEnumConverter.cs" />
     <Compile Include="Models\ConnectionModel.cs" />
     <Compile Include="Models\SetupModel.cs" />
+    <Compile Include="Tools\ConvertTool.cs" />
     <Compile Include="Windows\ConnectWindow.xaml.cs">
       <DependentUpon>ConnectWindow.xaml</DependentUpon>
     </Compile>

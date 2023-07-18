@@ -21,6 +21,13 @@ namespace ModbusSlavePlus.Models
     {
         private MainWindow window;
         public SerialPort Sp;
+        public bool IsConnect
+        {
+            get
+            {
+                return Sp != null ? Sp.IsOpen : false;
+            }
+        }
         public ModbusSlave Slave;
         public byte SlaveId { get; set; } = 1;
         public ushort Address { get; set; } = 0;
@@ -59,16 +66,16 @@ namespace ModbusSlavePlus.Models
 
         public void UpdateHoldingRegisters(Param param)
         {
-            Slave.DataStore.HoldingRegisters[param.Address + 1] = ushort.Parse(param.Value);
+            Slave.DataStore.HoldingRegisters[param.Address + 1] = param.Value;
         }
 
         public void DataStore_DataStoreWrittenTo(object sender, DataStoreEventArgs e)
         {
             foreach (var param in Params)
             {
-                param.Value = Slave.DataStore.HoldingRegisters[param.Address + 1].ToString();
+                param.Value = Slave.DataStore.HoldingRegisters[param.Address + 1];
             }
-            UpdateValue("Params");
+            //UpdateValue("Params");
         }
 
         /// <summary>
@@ -79,7 +86,7 @@ namespace ModbusSlavePlus.Models
             List<Param> ps = new List<Param>();
             for(int i = Address;i<Address + Quantity; i++)
             {
-                ps.Add(new Param { Address = (ushort)i, Notify = UpdateHoldingRegisters });
+                ps.Add(new Param { Address = (ushort)i, Notify = UpdateHoldingRegisters,OtherParams = ps });
             }
             Params = ps;
         }
@@ -101,12 +108,13 @@ namespace ModbusSlavePlus.Models
                     Sp.Parity = (Parity)data.SelectedParity.Value;
                     Sp.StopBits = (StopBits)data.SelectedStopBits.Value;
                     Sp.Open();
+                    UpdateValue("IsConnect");
                     Slave = ModbusSerialSlave.CreateRtu(1, Sp);
                     Slave.DataStore = DataStoreFactory.CreateDefaultDataStore();
                     Slave.DataStore.DataStoreWrittenTo += DataStore_DataStoreWrittenTo;
                     foreach (Param param in Params)
                     {
-                        param.Value = Slave.DataStore.HoldingRegisters[param.Address + 1].ToString();
+                        param.Value = Slave.DataStore.HoldingRegisters[param.Address + 1];
                     }
                     Task.Run(() =>
                     {
@@ -121,6 +129,7 @@ namespace ModbusSlavePlus.Models
             if (Sp.IsOpen)
             {
                 Sp.Close();
+                UpdateValue("IsConnect");
             }
         }
 

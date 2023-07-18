@@ -14,6 +14,28 @@
     </Window.DataContext>-->
     <Window.Resources>
         <c:TypeEnumConverter x:Key="TypeEnumConverter"/>
+        <Style x:Key="ConnectStyle" TargetType="{x:Type MenuItem}">
+            <Setter Property="IsEnabled" Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsConnect}" Value="False">
+                    <Setter Property="IsEnabled" Value="True" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsConnect}" Value="True">
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="DisConnectStyle" TargetType="{x:Type MenuItem}">
+            <Setter Property="IsEnabled" Value="False" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsConnect}" Value="True">
+                    <Setter Property="IsEnabled" Value="True" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsConnect}" Value="False">
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <!--<Grid.ColumnDefinitions>
@@ -40,8 +62,8 @@
                     <MenuItem Header="_Copy" Padding="1,1,1,1"/>
                 </MenuItem>
                 <MenuItem Header="_Connection" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
-                    <MenuItem Command="{Binding ConnectCommand}" Header="_Connect" Padding="1,1,1,1"/>
-                    <MenuItem Command="{Binding CloseCommand}" Header="_Disconnect" Padding="1,1,1,1"/>
+                    <MenuItem Command="{Binding ConnectCommand}" Style="{StaticResource ConnectStyle}" Header="_Connect" Padding="1,1,1,1"/>
+                    <MenuItem Command="{Binding CloseCommand}" Style="{StaticResource DisConnectStyle}" Header="_Disconnect" Padding="1,1,1,1"/>
                 </MenuItem>
                 <MenuItem Header="_Setup" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,5,5">
                     <MenuItem Command="{Binding OpenSetupWindowCommand}" Header="_Read/Write definition..." Padding="1,1,1,1"/>
@@ -59,7 +81,8 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <DataGrid Style="{x:Null}" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Params}" CanUserSortColumns="False" CanUserAddRows="False">
+        <DataGrid Style="{x:Null}" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Params}" CanUserSortColumns="False" CanUserAddRows="False" 
+                  SelectionMode="Single" SelectionUnit="Cell">
             <DataGrid.Resources>
                 <ObjectDataProvider x:Key="TypeCodeProvider" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
                     <ObjectDataProvider.MethodParameters>
@@ -77,7 +100,7 @@
                 </DataGridTemplateColumn>-->
                 <DataGridTextColumn Header="地址" Width="50" IsReadOnly="true" Binding="{Binding Address}"></DataGridTextColumn>
                 <DataGridTextColumn Header="参数名" Width="50" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="值" Width="100"  Binding="{Binding Value}"></DataGridTextColumn>
+                <DataGridTextColumn Header="值" Width="100"  Binding="{Binding ConvertedValue}"></DataGridTextColumn>
                 <DataGridTextColumn Header="单位" Width="100"  Binding="{Binding Unit}"></DataGridTextColumn>
                 <DataGridTextColumn Header="含义" Width="100"  Binding="{Binding ConvertedValue}"></DataGridTextColumn>
                 <!--<DataGridTextColumn Header="类型" Width="100"  Binding="{Binding Type}"></DataGridTextColumn>-->
