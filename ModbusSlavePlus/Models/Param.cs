@@ -16,6 +16,7 @@ namespace ModbusSlavePlus.Models
         public string Name { get; set; }
         public ushort Address { get; set; }
         public string Unit { get; set; }
+        public string Desc { get; set; }
         private string _convertedValue;
         public string ConvertedValue 
         { 

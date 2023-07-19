@@ -102,9 +102,9 @@
                 <DataGridTextColumn Header="参数名" Width="50" Binding="{Binding Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="值" Width="100"  Binding="{Binding ConvertedValue}"></DataGridTextColumn>
                 <DataGridTextColumn Header="单位" Width="100"  Binding="{Binding Unit}"></DataGridTextColumn>
-                <DataGridTextColumn Header="含义" Width="100"  Binding="{Binding ConvertedValue}"></DataGridTextColumn>
+                <DataGridTextColumn Header="含义" IsReadOnly="true" Width="100"  Binding="{Binding Desc}"></DataGridTextColumn>
                 <!--<DataGridTextColumn Header="类型" Width="100"  Binding="{Binding Type}"></DataGridTextColumn>-->
-                <DataGridComboBoxColumn Header="类型" Width="100" SelectedItemBinding="{Binding Type}">
+                <DataGridComboBoxColumn Header="类型" Width="100" SelectedItemBinding="{Binding Type,UpdateSourceTrigger=PropertyChanged}">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
                             <Setter Property="ItemsSource" Value="{Binding Source={StaticResource TypeCodeProvider}}" />
